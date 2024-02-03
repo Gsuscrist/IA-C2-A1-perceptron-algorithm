@@ -1,3 +1,7 @@
+# Execute this file in order to try te perceptron algorithm.
+# Here you will find the interface and the execution call.
+
+
 import customtkinter
 from tkinter import messagebox, filedialog
 
@@ -61,3 +65,5 @@ bttn_start.pack(pady=30)
 master_frame03.pack()
 
 app.mainloop()
+
+# By Jesus Antonio Gordillo Orantes 213359

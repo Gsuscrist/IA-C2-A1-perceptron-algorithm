@@ -1,3 +1,4 @@
+import csv
 from tkinter import messagebox
 
 import pandas as pd
@@ -67,9 +68,18 @@ def optimization(matrix_x, matrix_y_d, matrix_w, eta, tolerance_error, iteration
     generate_weight_evolution_graphic(weight_data)
 
 
+def detect_delimiter(file_path):
+    with open(file_path, 'r') as file:
+        sample = file.read(1024)
+        dialect = csv.Sniffer().sniff(sample)
+        return dialect.delimiter
+
+
 def initialize(file_path):
-    csv_doc = pd.read_csv(file_path, header=None)
+    delimiter = detect_delimiter(file_path)
+    csv_doc = pd.read_csv(file_path, header=None, delimiter=delimiter)
     matrix_x = np.hstack((np.ones((len(csv_doc), 1)), csv_doc.iloc[:, :-1].values))
+    print("info: \n", csv_doc)
     matrix_y_d = csv_doc.iloc[:, -1].values.reshape(-1, 1)
     matrix_w = np.random.uniform(low=-1, high=1, size=(1, matrix_x.shape[1]))
     return matrix_x, matrix_y_d, matrix_w
